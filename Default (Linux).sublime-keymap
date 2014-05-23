@@ -2,5 +2,8 @@
 	{ "keys": ["super+c"], "command": "show_panel", "args": {"panel": "console", "toggle": true} },
 	{ "keys": ["super+-"], "command": "toggle_comment", "args": { "block": false } },
 	{ "keys": ["super+alt+-"], "command": "toggle_comment", "args": { "block": true } },
-	{ "keys": ["super+f"], "command": "find_all_under" }
+	{ "keys": ["super+f"], "command": "find_all_under" },
+	{ "keys": ["ctrl+space"], "command": "auto_complete" },
+	{ "keys": ["ctrl+j"], "command": "join_lines" },
+	{ "keys": ["super+delete"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete Line.sublime-macro"} }
 ]
