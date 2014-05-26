@@ -1,10 +1,15 @@
 {
-	"color_scheme": "Packages/Theme - Flatland/Flatland Monokai.tmTheme",
-	"draw_white_space": "all",
-	"font_size": 8,
-	"ignored_packages":
-	[
-		"Vintage"
-	],
-	"theme": "Flatland Dark.sublime-theme"
+    "color_scheme": "Packages/Theme - Flatland/Flatland Monokai.tmTheme",
+    "draw_white_space": "all",
+    "font_size": 8,
+        // Set to true to insert spaces when tab is pressed
+    "translate_tabs_to_spaces": true,
+    // If translate_tabs_to_spaces is true, use_tab_stops will make tab and
+    // backspace insert/delete up to the next tabstop
+    "use_tab_stops": false,
+    "ignored_packages":
+    [
+        "Vintage"
+    ],
+    "theme": "Flatland Dark.sublime-theme"
 }
