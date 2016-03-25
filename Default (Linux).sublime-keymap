@@ -1,10 +1,14 @@
 [
-	{ "keys": ["super+c"], "command": "show_panel", "args": {"panel": "console", "toggle": true} },
-	{ "keys": ["super+-"], "command": "toggle_comment", "args": { "block": false } },
-	{ "keys": ["super+alt+-"], "command": "toggle_comment", "args": { "block": true } },
-	{ "keys": ["super+f"], "command": "find_all_under" },
-	{ "keys": ["ctrl+space"], "command": "auto_complete" },
-	{ "keys": ["ctrl+j"], "command": "join_lines" },
-	{ "keys": ["ctrl+shift+r"], "command": "reindent" , "args": { "single_line": false } },
-	{ "keys": ["super+delete"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete Line.sublime-macro"} }
+    { "keys": ["super+c"], "command": "show_panel", "args": {"panel": "console", "toggle": true} },
+    { "keys": ["super+-"], "command": "toggle_comment", "args": { "block": false } },
+    { "keys": ["super+alt+-"], "command": "toggle_comment", "args": { "block": true } },
+    { "keys": ["super+f"], "command": "find_all_under" },
+    { "keys": ["ctrl+space"], "command": "auto_complete" },
+    { "keys": ["ctrl+j"], "command": "join_lines" },
+    { "keys": ["ctrl+shift+r"], "command": "reindent" , "args": { "single_line": false } },
+    { "keys": ["super+delete"], "command": "run_macro_file", "args": {"file": "Packages/Default/Delete Line.sublime-macro"} },
+    { "keys": ["super+alt+up"], "args": { "action": "increment_number_by_10" }, "command": "run_emmet_action", "context": [ { "key": "emmet_action_enabled.increment_number_by_10" } ]},
+    { "keys": ["super+alt+down"], "args": { "action": "decrement_number_by_10" }, "command": "run_emmet_action", "context": [ { "key": "emmet_action_enabled.decrement_number_by_10" } ]},
+    { "keys": ["alt+shift+up"], "command": "select_lines", "args": {"forward": false} },
+    { "keys": ["alt+shift+down"], "command": "select_lines", "args": {"forward": true} }
 ]
