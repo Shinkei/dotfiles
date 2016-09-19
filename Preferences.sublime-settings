@@ -1,6 +1,6 @@
 {
-    "theme": "Material-Theme.sublime-theme",
-    "color_scheme": "Packages/Material Theme/schemes/Material-Theme.tmTheme",
+    "theme": "Flatland Dark.sublime-theme",
+    "color_scheme": "Packages/Theme - Flatland/Flatland Monokai.tmTheme",
     "draw_white_space": "all",
     "font_size": 8,
     // Set to true to insert spaces when tab is pressed
@@ -16,4 +16,7 @@
     "line_padding_top": 3,
     "overlay_scroll_bars": "enabled",
     "show_encoding": true,
+    "caret_extra_bottom": 2,
+	"caret_extra_top": 2,
+	"caret_extra_width": 2
 }
