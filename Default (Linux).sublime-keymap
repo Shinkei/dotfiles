@@ -10,5 +10,6 @@
     { "keys": ["super+alt+up"], "args": { "action": "increment_number_by_10" }, "command": "run_emmet_action", "context": [ { "key": "emmet_action_enabled.increment_number_by_10" } ]},
     { "keys": ["super+alt+down"], "args": { "action": "decrement_number_by_10" }, "command": "run_emmet_action", "context": [ { "key": "emmet_action_enabled.decrement_number_by_10" } ]},
     { "keys": ["alt+shift+up"], "command": "select_lines", "args": {"forward": false} },
-    { "keys": ["alt+shift+down"], "command": "select_lines", "args": {"forward": true} }
+    { "keys": ["alt+shift+down"], "command": "select_lines", "args": {"forward": true} },
+    { "keys": ["ctrl+,"], "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} }
 ]
