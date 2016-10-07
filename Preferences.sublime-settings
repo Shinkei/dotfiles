@@ -17,8 +17,8 @@
     //Enhance the cursor
     "caret_extra_width": 3,
     "caret_extra_top": 2,
-    "caret_extra_bottom": 2
-        "always_show_minimap_viewport": true,
+    "caret_extra_bottom": 2,
+    "always_show_minimap_viewport": true,
     "color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
     "material_theme_accent_sky": true,
     "material_theme_compact_sidebar": true,
