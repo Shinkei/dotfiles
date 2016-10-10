@@ -1,28 +1,30 @@
 {
+    "always_show_minimap_viewport": true,
+    //Enhance the cursor
+    "caret_extra_bottom": 2,
+    "caret_extra_top": 2,
+    "caret_extra_width": 3,
+    "color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
+    "default_line_ending": "unix",
     "draw_white_space": "all",
+    "font_face": "Source Code Pro",
     "font_size": 14,
-    // Set to true to insert spaces when tab is pressed
-    "translate_tabs_to_spaces": true,
-    // If translate_tabs_to_spaces is true, use_tab_stops will make tab and
-    // backspace insert/delete up to the next tabstop
-    "use_tab_stops": false,
     "ignored_packages":
     [
         "Vintage"
     ],
     "line_padding_bottom": 2,
     "line_padding_top": 2,
-    "overlay_scroll_bars": "enabled",
-    "show_encoding": true,
-    //Enhance the cursor
-    "caret_extra_width": 3,
-    "caret_extra_top": 2,
-    "caret_extra_bottom": 2
-        "always_show_minimap_viewport": true,
-    "color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
     "material_theme_accent_sky": true,
     "material_theme_compact_sidebar": true,
     "material_theme_contrast_mode": true,
     "material_theme_small_statusbar": true,
+    "overlay_scroll_bars": "enabled",
+    "show_encoding": true,
     "theme": "Material-Theme.sublime-theme",
+    // Set to true to insert spaces when tab is pressed
+    "translate_tabs_to_spaces": true,
+    // If translate_tabs_to_spaces is true, use_tab_stops will make tab and
+    // backspace insert/delete up to the next tabstop
+    "use_tab_stops": false,
 }
