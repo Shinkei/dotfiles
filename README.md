@@ -9,3 +9,11 @@ Puglins
 - Theme - Flatland
 - Maerial theme
 - Font: source code pro
+
+-Boxy Theme
+-Colorsublime
+-Colorsublime - Themes
+-Log Highlight
+-LogView
+-Package Control
+-zz File Icons
