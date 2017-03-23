@@ -28,5 +28,6 @@
     "fade_fold_buttons": false,
     "indent_guide_options": ["draw_normal", "draw_active"],
     "folder_exclude_patterns": [".svn", ".git", ".hg", "CVS", "node_modules"],
-    "theme_tab_selected_underlined": true
+    "theme_tab_selected_underlined": true,
+    "file_exclude_patterns": ["*.pyc", "*.pyo", "*.exe", "*.dll", "*.obj","*.o", "*.a", "*.lib", "*.so", "*.dylib", "*.ncb", "*.sdf", "*.suo", "*.pdb", "*.idb", ".DS_Store", "*.class", "*.psd", "*.db", "*.sublime-workspace", "*.sublime-project", "*.iml"]
 }
