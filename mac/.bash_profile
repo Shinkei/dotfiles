@@ -18,10 +18,13 @@ POWERLINE_BASH_CONTINUATION=1
 POWERLINE_BASH_SELECT=1
 source /usr/local/lib/python3.7/site-packages/powerline/bindings/bash/powerline.sh
 
+#Tmuxinator completion
+source .tmuxinator-completion.bash
+
 # Alias
 alias pra='pm2 reload all'
 alias pk='pm2 kill'
-alias psd='pm2 start pm2-development.yml'
+alias psd='pm2 start ~/SensoryMinds/tradeplatform/pm2-development.yml'
 
 # variable to load the configuration for the JTI project (this is a file on the config folder)
 export HOST=jorge
