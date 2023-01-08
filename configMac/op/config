@@ -1,0 +1,15 @@
+{
+	"latest_signin": "airup",
+	"device": "qnyurviraoxbkge3nhan6twzsu",
+	"accounts": [
+		{
+			"shorthand": "airup",
+			"accountUUID": "EJS6IPC64NAKDNQYRRZNOHXVU4",
+			"url": "https://airup.1password.eu",
+			"email": "jorge.ramirez@air-up.com",
+			"accountKey": "A3-NPXESK-WESPNS-54BDH-Y9HQM-HYF6S-EWEJM",
+			"userUUID": "VPYP63RSXJCKDMEZAVPY2AJ4ZQ",
+			"dsecret": "aV8W7GWGds8rws2c8a0sjg"
+		}
+	]
+}
