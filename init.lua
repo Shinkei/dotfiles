@@ -39,7 +39,7 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
-  -- Devicons
+  -- nvim tree
   {
     'nvim-tree/nvim-tree.lua', dependencies={  'nvim-tree/nvim-web-devicons'}, opts={}
   },
@@ -215,7 +215,7 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set('i', 'jk', '<ESC>')
 
 -- nvim-tree
-vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>')
+vim.keymap.set('n', '<leader>b', ':NvimTreeToggle<CR>')
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
