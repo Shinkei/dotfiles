@@ -1,0 +1,4 @@
+theme = "monokai_pro_machine"
+
+[editor]
+line-number = "relative"
