@@ -15,8 +15,8 @@ export ZSH="/Users/jorge.ramirez/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
-
+# ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -90,7 +90,7 @@ plugins=(
   macos
   sudo
   thor
-  docker
+  #docker
   tmux
 )
 export ZSH_TMUX_AUTOSTART=true
@@ -124,12 +124,90 @@ source $ZSH/oh-my-zsh.sh
 # alias git-remove-branches=git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d
 alias ls="lsd"
 
-source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
+# source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+#[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
 
+source /opt/homebrew/opt/powerlevel10k/powerlevel10k.zsh-theme
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+###-begin-npm-completion-###
+#
+# npm command completion script
+#
+# Installation: npm completion >> ~/.bashrc  (or ~/.zshrc)
+# Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
+#
+
+if type complete &>/dev/null; then
+  _npm_completion () {
+    local words cword
+    if type _get_comp_words_by_ref &>/dev/null; then
+      _get_comp_words_by_ref -n = -n @ -n : -w words -i cword
+    else
+      cword="$COMP_CWORD"
+      words=("${COMP_WORDS[@]}")
+    fi
+
+    local si="$IFS"
+    if ! IFS=$'\n' COMPREPLY=($(COMP_CWORD="$cword" \
+                           COMP_LINE="$COMP_LINE" \
+                           COMP_POINT="$COMP_POINT" \
+                           npm completion -- "${words[@]}" \
+                           2>/dev/null)); then
+      local ret=$?
+      IFS="$si"
+      return $ret
+    fi
+    IFS="$si"
+    if type __ltrim_colon_completions &>/dev/null; then
+      __ltrim_colon_completions "${words[cword]}"
+    fi
+  }
+  complete -o default -F _npm_completion npm
+elif type compdef &>/dev/null; then
+  _npm_completion() {
+    local si=$IFS
+    compadd -- $(COMP_CWORD=$((CURRENT-1)) \
+                 COMP_LINE=$BUFFER \
+                 COMP_POINT=0 \
+                 npm completion -- "${words[@]}" \
+                 2>/dev/null)
+    IFS=$si
+  }
+  compdef _npm_completion npm
+elif type compctl &>/dev/null; then
+  _npm_completion () {
+    local cword line point words si
+    read -Ac words
+    read -cn cword
+    let cword-=1
+    read -l line
+    read -ln point
+    si="$IFS"
+    if ! IFS=$'\n' reply=($(COMP_CWORD="$cword" \
+                       COMP_LINE="$line" \
+                       COMP_POINT="$point" \
+                       npm completion -- "${words[@]}" \
+                       2>/dev/null)); then
+
+      local ret=$?
+      IFS="$si"
+      return $ret
+    fi
+    IFS="$si"
+  }
+  compctl -K _npm_completion npm
+fi
+###-end-npm-completion-###
+
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
