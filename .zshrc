@@ -194,4 +194,11 @@ if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ]; then
 fi
 
 #run at start
-neofetch
+# neofetch
+
+# bit
+case ":$PATH:" in
+  *":/home/shinkei/bin:"*) ;;
+  *) export PATH="$PATH:/home/shinkei/bin" ;;
+esac
+# bit end
