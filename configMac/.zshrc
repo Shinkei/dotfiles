@@ -92,6 +92,7 @@ plugins=(
   thor
   #docker
   tmux
+  z
 )
 export ZSH_TMUX_AUTOSTART=true
 source $ZSH/oh-my-zsh.sh
