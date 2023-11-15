@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -8,7 +15,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel9k/powerlevel9k"
+# ZSH_THEME="powerlevel9k/powerlevel9k"
 
 
 # Set list of themes to pick from when loading at random
@@ -80,7 +87,12 @@ plugins=(
     node
     sudo
     thor
+    tmux
+    z
     docker)
+
+# tmux plugin
+ZSH_TMUX_AUTOSTART=true
 
 if [ -f $ZSH/oh-my-zsh.sh ]; then
   source $ZSH/oh-my-zsh.sh
@@ -149,39 +161,14 @@ alias ytv-best="yt-dlp -f 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/bestvideo+besta
 
 #Cleanup orphaned packages
 alias cleanup='sudo pacman -Rns $(pacman -Qtdq)'
-
-
-# Elements options of left prompt (remove the @username context)
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir nodeenv vcs)
-# Elements options of right prompt
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs time)
-
-# Add a second prompt line for the command
-#POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-
-# Add a space in the first prompt 
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%f"
-# tructate the path to show
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-
-# Number of charaters to show for the branch name
-POWERLEVEL9K_VCS_SHORTEN_LENGTH=25
-POWERLEVEL9K_VCS_SHORTEN_MIN_LENGTH=30
-POWERLEVEL9K_VCS_SHORTEN_STRATEGY="truncate_from_right"
-
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%{%B%F{black}%K{yellow}%} $user_symbol%{%b%f%k%F{yellow}%} %{%f%}"
+alias pacmanup='sudo pacman -Syu && yay -Syua'
+alias pu='sudo pacman -Syu && yay -Syua'
 
 # Visual customisation of the second prompt line
 local user_symbol="$"
 if [[ $(print -P "%#") =~ "#" ]]; then
     user_symbol = "#"
 fi
-
-# Change the git status to red when something isn't committed and pushed
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='red'
-
-# Add a new line after the global prompt 
-POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -202,3 +189,9 @@ case ":$PATH:" in
   *) export PATH="$PATH:/home/shinkei/bin" ;;
 esac
 # bit end
+#source ~/powerlevel10k/powerlevel10k.zsh-theme
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
