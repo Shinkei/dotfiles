@@ -170,6 +170,25 @@ if [[ $(print -P "%#") =~ "#" ]]; then
     user_symbol = "#"
 fi
 
+# functions
+_gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
+_viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
+
+gcop(){
+  git log \
+    --color=always \
+    --format="%C(cyan)%h %C(blue)%ar%C(auto)%d %C(yellow)%s%+b %C(black)%ae" "$@" |
+    fzf -i -e +s \
+      --reverse \
+      --tiebreak=index \
+      --no-multi \
+      --ansi \
+      --preview="echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'" \
+      --header "enter: view C-y: copy hash" \
+      --bind "enter:execute:$_viewGitLogLine | less -R" \
+      --bind "ctrl-y:execute:$_gitLogLineToHash | xclip "
+}
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
