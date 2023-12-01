@@ -82,6 +82,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
+  git-prompt
   zsh-autosuggestions
   yarn
   web-search
@@ -124,6 +125,8 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 # alias git-remove-branches=git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -d
 alias ls="lsd"
+alias glgp="gpr && gp"
+alias gl="gpr"
 
 # source /usr/local/opt/powerlevel10k/powerlevel10k.zsh-theme
 
