@@ -43,7 +43,7 @@ require('lazy').setup({
   {
     'nvim-tree/nvim-tree.lua', dependencies={  'nvim-tree/nvim-web-devicons'}, opts={}
   },
-{
+  {
     "nvim-neorg/neorg",
     build = ":Neorg sync-parsers",
     -- tag = "*",
@@ -162,6 +162,7 @@ require('lazy').setup({
       pcall(require('nvim-treesitter.install').update { with_sync = true })
     end,
   },
+  "ThePrimeagen/vim-be-good",
   -- NOTE: Next Step on Your Neovim Journey: Add/Configure additional "plugins" for kickstart
   --       These are some example plugins that I've included in the kickstart repository.
   --       Uncomment any of the lines below to enable them.
@@ -198,6 +199,9 @@ vim.o.clipboard = 'unnamedplus'
 
 -- Enable break indent
 vim.o.breakindent = true
+
+-- relative line numbers
+vim.o.relativenumber = true
 
 -- Save undo history
 vim.o.undofile = true
