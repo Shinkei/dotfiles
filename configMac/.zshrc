@@ -16,7 +16,7 @@ export ZSH="/Users/jorge.ramirez/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -131,7 +131,7 @@ alias we="curl es.wttr.in/munich\?format=1"
 
 # functions
 _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
-_viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'"
+_viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always % | delta --line-numbers'"
 
 gcop(){
   git log \
@@ -142,7 +142,7 @@ gcop(){
       --tiebreak=index \
       --no-multi \
       --ansi \
-      --preview="echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always % | diff-so-fancy'" \
+      --preview="echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always % | delta --line-numbers'" \
       --header "enter: view C-y: copy hash" \
       --bind "enter:execute:$_viewGitLogLine | less -R" \
       --bind "ctrl-y:execute:$_gitLogLineToHash | xclip "
@@ -158,7 +158,11 @@ gcop(){
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 
-source /opt/homebrew/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-theme
+# source /opt/homebrew/opt/powerlevel10k/share/powerlevel10k/powerlevel10k.zsh-theme
+# Replace p10k with omp
+if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+  eval "$(oh-my-posh init zsh --config ~/.shinkei.omp.json)"
+fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 ###-begin-npm-completion-###
@@ -238,8 +242,20 @@ fi
 # add cargo to the path
 export PATH=$PATH:/Users/jorge.ramirez/.cargo/bin
 
+# recomendation to use fzf in zsh
+eval "$(fzf --zsh)"
 
-# AWS Credentials for airup migrations
-export AWS_ACCESS_KEY_ID="ASIAU3WODQPZWQK7RLCM"
-export AWS_SECRET_ACCESS_KEY="PrzJpy6IBt+hEhe+KyPL0F4onlgL75FHrNiAKOj6"
-export AWS_SESSION_TOKEN="IQoJb3JpZ2luX2VjEFcaDGV1LWNlbnRyYWwtMSJHMEUCIDTEOfDYaNOXQDZ/y7wZ2EMFM7WeL6SmV3SMuKAIWu5dAiEAo8j6DHTRYsSaS/5dSII7pls472eWWo7M+d9PiQU2lA8qlwMIwP//////////ARAAGgwzMzQzNjU5NTA5NjMiDMkQBa05zZtGOVpzyCrrAgf89Xstl5xJss8Fu0LWYtnU43Frqn11dBVznGSRC2tcrQGhfm2Kew1MdWnd1uvyFqWTB9dM6p2WfS2l7WOK9//LUTdrYr4+z01hHSLAVUfTtlt9GhWfcBCv9i5pjPVAzadC0Mr5MNMPCGsAyx6PGEET8jRTSCJ5yjtgsKW84voECb+JcF1qPw5QFC1oOqzkToWefufyusH0maXf3Q/QsCXrU+Lpzs3/9VN19qwUK6tdZZbI7ebBeFY752kiH2u0dL0do76zrX8dFFjs3ysMSIKBMBFh4Yhm+wUvuaksgdGFYREtdUmMGzMKX3c5YHmwAojvK/qsgDqno4zTwtkmSiYsgR9E1KPM1cQ21NbLIbvl8SkmjLBI15hKt5yuLMErK4Ge0Xbs12XG1YuBl7s4h0ir+2/N0vHnnFvKY+DVONT21/anCIzZgW6VWgGwe/EuQOzJ3Uo4tUDY4NZ54YcZseQah1fvKDZ9+ldU3TCu0cyrBjqmAVwJ+Ql9gWSLtkHJmkSwcCY5tCPOaW+HUDpqll7Ih5/VUOiVxH6GTxUGnUlLHWYuM7iZ1C0t/OynWC+XPTrPYzbJJySJ6Z+L0bmjMwL/bZpc6Iq5FTr/52qpKjd2ahNTkn1m0LCAZVa5DGrdMVidTIglIbZYJ4o0ZCrFgggTs2hu/GloqO/leae8FvYRJWLJKM8O9iFg5cV4NFLJoEg10Qms8TiTGSU="
+#npm fzf completer
+npmrf () {
+  local script
+  script=$(bat package.json | jq -r '.scripts | keys[] ' | sort | fzf)  && npm run $script
+}
+
+
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# opam configuration
+[[ ! -r /Users/jorge.ramirez/.opam/opam-init/init.zsh ]] || source /Users/jorge.ramirez/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
