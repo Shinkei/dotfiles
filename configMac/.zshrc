@@ -1,3 +1,5 @@
+export LANG=en_US.UTF-8
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -71,7 +73,7 @@ export ZSH="/Users/jorge.ramirez/.oh-my-zsh"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
-
+setopt HIST_IGNORE_ALL_DUPS
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
@@ -81,19 +83,19 @@ export ZSH="/Users/jorge.ramirez/.oh-my-zsh"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
+  brew
   git
   git-prompt
-  zsh-autosuggestions
-  yarn
-  web-search
   jsontools
-  node
   macos
+  node
   sudo
   thor
-  #docker
   tmux
+  web-search
+  yarn
   z
+  zsh-autosuggestions
 )
 export ZSH_TMUX_AUTOSTART=true
 source $ZSH/oh-my-zsh.sh
@@ -106,11 +108,11 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='nvim'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -259,3 +261,17 @@ export SDKMAN_DIR="$HOME/.sdkman"
 
 # opam configuration
 [[ ! -r /Users/jorge.ramirez/.opam/opam-init/init.zsh ]] || source /Users/jorge.ramirez/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+
+# bun completions
+#[ -s "/Users/jorge.ramirez/.bun/_bun" ] && source "/Users/jorge.ramirez/.bun/_bun"
+
+# bun
+#export BUN_INSTALL="$HOME/.bun"
+#export PATH="$BUN_INSTALL/bin:$PATH"
+eval "$(mise activate zsh)"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+DEBUG_PRINT_LIMIT=100000
