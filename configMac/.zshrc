@@ -1,12 +1,5 @@
 export LANG=en_US.UTF-8
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -95,9 +88,9 @@ plugins=(
   web-search
   yarn
   z
-  zsh-autosuggestions
+#  zsh-autosuggestions
 )
-export ZSH_TMUX_AUTOSTART=true
+export ZSH_TMUX_AUTOSTART=false
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -130,6 +123,7 @@ alias ls="lsd"
 alias glgp="gpr && gp"
 alias gl="gpr"
 alias we="curl es.wttr.in/munich\?format=1"
+alias antigravity="agy"
 
 # functions
 _gitLogLineToHash="echo {} | grep -o '[a-f0-9]\{7\}' | head -1"
@@ -138,14 +132,17 @@ _viewGitLogLine="$_gitLogLineToHash | xargs -I % sh -c 'git show --color=always 
 gcop(){
   git log \
     --color=always \
-    --format="%C(cyan)%h %C(blue)%ar%C(auto)%d %C(yellow)%s%+b %C(black)%ae" "$@" |
+    --date=format-local:'%Y-%m-%d %H:%M' \
+    --format="%C(cyan)%h %C(blue)%ad%C(auto)%d %C(yellow)%s%+b %C(black)%ae" "$@" |
     fzf -i -e +s \
       --reverse \
       --tiebreak=index \
       --no-multi \
       --ansi \
+      --bind "j:down,k:up" \
+      --bind "/:toggle-search" \
       --preview="echo {} | grep -o '[a-f0-9]\{7\}' | head -1 | xargs -I % sh -c 'git show --color=always % | delta --line-numbers'" \
-      --header "enter: view C-y: copy hash" \
+      --header "j/k: move  /: search  enter: view  C-y: copy hash" \
       --bind "enter:execute:$_viewGitLogLine | less -R" \
       --bind "ctrl-y:execute:$_gitLogLineToHash | xclip "
 }
@@ -265,9 +262,6 @@ export SDKMAN_DIR="$HOME/.sdkman"
 # bun completions
 #[ -s "/Users/jorge.ramirez/.bun/_bun" ] && source "/Users/jorge.ramirez/.bun/_bun"
 
-# bun
-#export BUN_INSTALL="$HOME/.bun"
-#export PATH="$BUN_INSTALL/bin:$PATH"
 eval "$(mise activate zsh)"
 
 # bun
@@ -275,3 +269,14 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 DEBUG_PRINT_LIMIT=100000
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# Added by Antigravity
+export PATH="/Users/jorge.ramirez/.antigravity/antigravity/bin:$PATH"
+
+# Opencode webshop path
+#export PATH="/Users/jorge.ramirez/Programming/ai-sandbox/opencode/bin/opencode:$PATH"
+
+
+# Added by Antigravity CLI installer
+export PATH="/Users/jorge.ramirez/.local/bin:$PATH"
