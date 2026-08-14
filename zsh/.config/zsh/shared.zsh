@@ -35,8 +35,9 @@ gcop() {
       --tiebreak=index \
       --no-multi \
       --ansi \
-      --preview="echo {} | grep -o '[a-f0-9]\\{7\\}' | head -1 | xargs -I % sh -c 'git show --color=always % | delta --line-numbers'" \
-      --header "enter: view ctrl-y: copy hash" \
-      --bind "enter:execute(echo {} | grep -o '[a-f0-9]\\{7\\}' | head -1 | xargs -I % sh -c 'git show --color=always % | delta --line-numbers | less -R')" \
-      --bind "ctrl-y:execute-silent(echo {} | grep -o '[a-f0-9]\\{7\\}' | head -1 | sh -c 'if command -v pbcopy >/dev/null 2>&1; then pbcopy; elif command -v xclip >/dev/null 2>&1; then xclip -selection clipboard; elif command -v wl-copy >/dev/null 2>&1; then wl-copy; else cat >/dev/null; fi')"
+      --preview="git show --color=always {1} | if command -v delta >/dev/null 2>&1; then delta --line-numbers; else cat; fi" \
+      --header "ctrl-j/k: navigate  ctrl-u/d: page  enter: view  ctrl-y: copy hash" \
+      --bind 'ctrl-j:down,ctrl-k:up,ctrl-u:half-page-up,ctrl-d:half-page-down' \
+      --bind "enter:execute(git show --color=always {1} | if command -v delta >/dev/null 2>&1; then delta --line-numbers; else cat; fi | less -R)" \
+      --bind "ctrl-y:execute-silent(if command -v pbcopy >/dev/null 2>&1; then printf '%s\\n' {1} | pbcopy; elif command -v xclip >/dev/null 2>&1; then printf '%s\\n' {1} | xclip -selection clipboard; elif command -v wl-copy >/dev/null 2>&1; then printf '%s\\n' {1} | wl-copy; fi)"
 }

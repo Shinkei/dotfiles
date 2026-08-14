@@ -1,0 +1,40 @@
+onboarding = false
+# Herdr keybindings matching tmux/.tmux.conf.
+#
+# Install this package with:
+#   stow herdr
+
+[keys]
+prefix = "ctrl+a"
+
+# tmux: bind | split-window -h
+split_vertical = "prefix+|"
+
+# tmux: bind - split-window -v
+split_horizontal = "prefix+minus"
+
+# tmux: bind r source-file ~/.tmux.conf
+reload_config = "prefix+r"
+
+# tmux: bind -n M-<arrow> select-pane
+focus_pane_left = "alt+left"
+focus_pane_right = "alt+right"
+focus_pane_up = "alt+up"
+focus_pane_down = "alt+down"
+
+# tmux: bind -n S-Left/Right previous/next-window
+previous_tab = "shift+left"
+next_tab = "shift+right"
+
+# prefix+r is used for reload, so leave resize mode unbound.
+resize_mode = ""
+
+[ui.toast]
+delivery = "herdr"
+
+[theme]
+name = "gruvbox"
+auto_switch = false
+
+[ui]
+agent_panel_sort = "priority"

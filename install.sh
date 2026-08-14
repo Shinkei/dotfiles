@@ -374,7 +374,7 @@ if ! has_command stow; then
   exit 1
 fi
 
-packages=(zsh tmux nvim "$OS")
+packages=(git zsh tmux nvim herdr "$OS")
 stow_args=(-d "$DOTFILES_DIR" -t "$TARGET")
 
 case "$MODE" in

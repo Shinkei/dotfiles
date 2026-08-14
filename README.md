@@ -6,6 +6,8 @@ A clean `stow`-based setup with shared defaults and OS-specific overrides.
 
 - `zsh`: shared shell setup with `oh-my-zsh`, `oh-my-posh`, and common aliases
 - `tmux`: main portable tmux configuration
+- `herdr`: Herdr keybindings aligned with tmux
+- `git`: shared Git configuration with `git-delta` as the diff pager
 - `nvim`: LazyVim with minimal overrides
 - `mac`: macOS extras such as `Brewfile`, iTerm2, and zsh settings
 - `linux`: Linux-specific zsh settings
@@ -23,13 +25,13 @@ Minimum requirements: `stow`, `zsh`, `tmux`, `nvim`, and `fzf`.
 This detects the current OS and applies:
 
 ```bash
-stow -R zsh tmux nvim mac
+stow -R zsh tmux nvim herdr mac
 ```
 
 or on Linux:
 
 ```bash
-stow -R zsh tmux nvim linux
+stow -R zsh tmux nvim herdr linux
 ```
 
 You can also force it explicitly:

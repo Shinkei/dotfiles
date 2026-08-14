@@ -1,8 +1,17 @@
 export ZSH="${ZSH:-$HOME/.oh-my-zsh}"
 export ZSH_THEME=""
-export TERM="xterm-256color"
 export EDITOR="nvim"
 export VISUAL="nvim"
+
+if command -v brew >/dev/null 2>&1; then
+  eval "$(brew shellenv)"
+elif [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+elif [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
 
 zstyle ':omz:update' mode auto
 
@@ -16,7 +25,12 @@ plugins=(
   sudo
   tmux
   z
-  docker
+  extract
+  colored-man-pages
+  safe-paste
+  command-not-found
+  copypath
+  copyfile
 )
 
 case "$(uname -s)" in
@@ -28,6 +42,11 @@ esac
 if [ -f "$ZSH/oh-my-zsh.sh" ]; then
   source "$ZSH/oh-my-zsh.sh"
 fi
+
+# Completion behavior
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*' group-name ''
 
 export HISTFILE="$HOME/.zsh_history"
 export HISTSIZE=1000000
@@ -70,12 +89,6 @@ source_first_existing \
   /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
   /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-source_first_existing \
-  /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
-  /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
-  /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
-  /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 export NVM_DIR="$HOME/.nvm"
 source_if_exists "$NVM_DIR/nvm.sh"
 source_if_exists "$NVM_DIR/bash_completion"
@@ -117,3 +130,10 @@ fi
 if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ] && [ -z "${TMUX:-}" ]; then
   tmux attach || tmux new-session
 fi
+
+# Syntax highlighting must be loaded last.
+source_first_existing \
+  /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /usr/share/zsh/syntax-highlighting/zsh-syntax-highlighting.zsh \
+  /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
