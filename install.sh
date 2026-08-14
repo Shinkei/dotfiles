@@ -12,6 +12,7 @@ ASSUME_YES=0
 BACKUP_CONFLICTS=0
 BACKUP_ROOT=""
 INSTALL_TMUX_PLUGINS=1
+DRY_RUN=0
 MANUAL_STEPS=()
 
 if [ -t 1 ]; then
@@ -35,12 +36,13 @@ fi
 usage() {
   cat <<'EOF'
 Usage:
-  ./install.sh [mac|linux] [--target DIR] [--stow|--restow|--delete] [--install-missing] [--bundle] [--backup-conflicts] [--no-tmux-plugins] [--yes]
+  ./install.sh [mac|linux] [--target DIR] [--stow|--restow|--delete] [--install-missing] [--bundle] [--backup-conflicts] [--no-tmux-plugins] [--dry-run] [--yes]
 
 Examples:
   ./install.sh
   ./install.sh mac
   ./install.sh --backup-conflicts
+  ./install.sh --dry-run
   ./install.sh mac --install-missing --bundle
   ./install.sh linux --target /tmp/dotfiles-test
 EOF
@@ -346,6 +348,9 @@ while [ $# -gt 0 ]; do
     --no-tmux-plugins)
       INSTALL_TMUX_PLUGINS=0
       ;;
+    --dry-run)
+      DRY_RUN=1
+      ;;
     -h|--help)
       usage
       exit 0
@@ -363,9 +368,11 @@ if [ -z "$OS" ]; then
   OS="$(detect_os)"
 fi
 
-if [ "$INSTALL_MISSING" -eq 1 ]; then
+if [ "$INSTALL_MISSING" -eq 1 ] && [ "$DRY_RUN" -eq 0 ]; then
   print_header "Bootstrap dependencies"
   install_missing_packages
+elif [ "$INSTALL_MISSING" -eq 1 ]; then
+  print_note "Dry run: skipping dependency installation."
 fi
 
 if ! has_command stow; then
@@ -388,26 +395,42 @@ case "$MODE" in
     ;;
 esac
 
+if [ "$DRY_RUN" -eq 1 ]; then
+  stow_args+=(--no)
+fi
+
 print_note "Mode: $MODE"
 print_note "Target: $TARGET"
 print_note "Packages: ${packages[*]}"
 
-if [ "$BACKUP_CONFLICTS" -eq 1 ] && [ "$MODE" != "delete" ]; then
+if [ "$BACKUP_CONFLICTS" -eq 1 ] && [ "$MODE" != "delete" ] && [ "$DRY_RUN" -eq 0 ]; then
   print_header "Backup conflicts"
   backup_stow_conflicts
+elif [ "$BACKUP_CONFLICTS" -eq 1 ] && [ "$DRY_RUN" -eq 1 ]; then
+  print_note "Dry run: skipping conflict backups."
 fi
 
 print_header "Apply dotfiles"
 print_step "Running stow ${stow_args[*]} ${packages[*]}"
 stow "${stow_args[@]}" "${packages[@]}"
-print_ok "Dotfiles applied."
+if [ "$DRY_RUN" -eq 1 ]; then
+  print_ok "Dry run complete. No files were changed."
+else
+  print_ok "Dotfiles applied."
+fi
 
-print_header "tmux plugins"
-install_tmux_plugins
+if [ "$DRY_RUN" -eq 0 ]; then
+  print_header "tmux plugins"
+  install_tmux_plugins
+else
+  print_note "Dry run: skipping tmux plugin installation."
+fi
 
-if [ "$MODE" != "delete" ]; then
+if [ "$MODE" != "delete" ] && [ "$DRY_RUN" -eq 0 ]; then
   print_header "Optional bundle"
   install_optional_bundle
+elif [ "$INSTALL_BUNDLE" -eq 1 ] && [ "$DRY_RUN" -eq 1 ]; then
+  print_note "Dry run: skipping Brewfile installation."
 fi
 
 if [ "$OS" = "mac" ] && [ "$MODE" != "delete" ] && [ "$INSTALL_BUNDLE" -eq 0 ]; then

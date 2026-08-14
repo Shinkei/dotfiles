@@ -14,78 +14,99 @@ A clean `stow`-based setup with shared defaults and OS-specific overrides.
 
 ## Installation
 
-The installer shows step-by-step status output, keeps terminal messages readable, and ends with a summary of any recommended manual follow-up.
+`install.sh` applies the Stow packages `git`, `zsh`, `tmux`, `nvim`, `herdr`, and the current OS package (`mac` or `linux`) to a target directory. By default, the target is your home directory and the mode is `--restow`.
 
-Minimum requirements: `stow`, `zsh`, `tmux`, `nvim`, and `fzf`.
+The script prints the selected target and packages, applies Stow, optionally installs tmux plugins, and ends with any manual follow-up it detects. `stow` is the only command required to apply the links; `zsh`, `tmux`, `nvim`, and `fzf` are needed to use their corresponding configuration.
+
+## First installation
+
+Review the proposed links before changing your home directory:
+
+```bash
+./install.sh --dry-run
+```
+
+If the preview has no unexpected conflicts, apply the configuration:
 
 ```bash
 ./install.sh
 ```
 
-This detects the current OS and applies:
+If you already have a file that conflicts with a managed path, preview first, then run with backups enabled. Existing conflicting files are moved to `~/.dotfiles-backups/<timestamp>/` before Stow creates links.
 
 ```bash
-stow -R zsh tmux nvim herdr mac
+./install.sh --dry-run --backup-conflicts
+./install.sh --backup-conflicts
 ```
 
-or on Linux:
+`--dry-run` never moves files; with `--backup-conflicts` it reports the Stow conflict, then the second command creates the backup and applies the links.
 
-```bash
-stow -R zsh tmux nvim herdr linux
-```
+## OS selection and target
 
-You can also force it explicitly:
+The OS is detected automatically. Pass `mac` or `linux` only when you need to force a package selection:
 
 ```bash
 ./install.sh mac
 ./install.sh linux
 ```
 
-Useful options:
+Use `--target` to install into an isolated directory instead of your home directory. Create the target first, and disable tmux plugins to keep the test offline and self-contained:
 
 ```bash
-./install.sh --stow
+mkdir -p /tmp/dotfiles-test
+./install.sh --target /tmp/dotfiles-test --no-tmux-plugins
+```
+
+## Options
+
+| Option | Effect |
+| --- | --- |
+| `mac` / `linux` | Force the OS-specific package instead of detecting it. |
+| `--target DIR` | Apply links under `DIR` instead of `$HOME`. |
+| `--stow` | Create links without first restowing existing managed links. |
+| `--restow` | Reapply managed links. This is the default mode. |
+| `--delete` | Remove links managed by these packages; it does not remove TPM or installed software. |
+| `--dry-run` | Preview the Stow operation without changing files. It skips backups, dependency installation, TPM, and Brewfile installation. |
+| `--backup-conflicts` | Move conflicting existing files into a timestamped `.dotfiles-backups` directory before applying links. Ignored during `--dry-run`. |
+| `--install-missing` | Install base packages using Homebrew on macOS, or `apt`, `dnf`, or `pacman` on Linux. Homebrew itself must already be installed. |
+| `--bundle` | On macOS, run `brew bundle --file mac/Brewfile` after Stow. |
+| `--no-tmux-plugins` | Skip cloning TPM and installing the plugins from `.tmux.conf`. |
+| `--yes` | Pass non-interactive confirmation to `apt`, `dnf`, or `pacman` when used with `--install-missing`. |
+
+Run `./install.sh --help` for the command synopsis and short examples.
+
+## Common workflows
+
+**New Linux machine with missing dependencies**
+
+```bash
+./install.sh --install-missing --backup-conflicts
+```
+
+**macOS with the optional Brewfile applications and fonts**
+
+```bash
+./install.sh mac --install-missing --bundle --backup-conflicts
+```
+
+**Update links after changing this repository**
+
+```bash
+./install.sh --dry-run
 ./install.sh --restow
+```
+
+**Remove only this repository's Stow-managed links**
+
+```bash
 ./install.sh --delete
-./install.sh --install-missing
-./install.sh --backup-conflicts
-./install.sh --no-tmux-plugins
-./install.sh --yes
-./install.sh --target /ruta/de/prueba
 ```
 
-If base dependencies are missing, you can ask the script to install them:
+## tmux plugins and Brewfile
 
-```bash
-./install.sh --install-missing
-```
+On normal non-delete runs, the script clones [TPM](https://github.com/tmux-plugins/tpm) to `~/.tmux/plugins/tpm` when needed and runs its plugin installer. Use `--no-tmux-plugins` when testing or when you do not want a network operation.
 
-On macOS, this uses Homebrew to install `stow`, `zsh`, `tmux`, `neovim`, and `fzf`.
-On Linux, it tries `apt`, `dnf`, or `pacman`, depending on what is available.
-
-If you also want to install the stack defined in `mac/Brewfile`:
-
-```bash
-./install.sh mac --install-missing --bundle
-```
-
-If you already have files in `HOME` that would conflict with `stow`, you can back them up automatically before linking:
-
-```bash
-./install.sh --backup-conflicts
-```
-
-By default, the script also tries to:
-
-- clone TPM into `~/.tmux/plugins/tpm` if it is missing
-- install the plugins declared in `~/.tmux.conf`
-- show a final summary with recommended manual follow-up steps
-
-If you do not want that step:
-
-```bash
-./install.sh --no-tmux-plugins
-```
+`--bundle` is macOS-only and installs the formulas, casks, fonts, and applications declared in `mac/Brewfile`. It does not remove programs that are absent from the Brewfile.
 
 ## Notes
 
@@ -93,8 +114,3 @@ If you do not want that step:
 - `tmux` is unified into a single config.
 - `tmux` installs TPM and its plugins automatically unless you use `--no-tmux-plugins`. If that step fails, the config falls back to a simple status bar.
 - `nvim` keeps LazyVim and only overrides the `jk` mapping to leave insert mode.
-- On macOS, if you want to install the `Brewfile` packages later:
-
-```bash
-./install.sh mac --bundle
-```
