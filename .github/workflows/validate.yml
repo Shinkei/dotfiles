@@ -1,0 +1,33 @@
+name: Validate dotfiles
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Install Stow
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes stow
+
+      - name: Validate shell syntax and whitespace
+        run: |
+          bash -n install.sh
+          if git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+            git diff --check HEAD^ HEAD
+          fi
+
+      - name: Run installation tests
+        run: ./test/install.sh

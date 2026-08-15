@@ -102,6 +102,16 @@ Run `./install.sh --help` for the command synopsis and short examples.
 ./install.sh --delete
 ```
 
+## Test the installer locally
+
+Run the repository's installation checks with GNU Stow available:
+
+```bash
+./test/install.sh
+```
+
+The test creates and removes its own temporary targets. It verifies dry-run safety, isolated Stow links, conflict preservation, and conflict backups. It never writes to `$HOME` or installs tmux plugins.
+
 ## tmux plugins and Brewfile
 
 On normal non-delete runs, the script clones [TPM](https://github.com/tmux-plugins/tpm) to `~/.tmux/plugins/tpm` when needed and runs its plugin installer. Use `--no-tmux-plugins` when testing or when you do not want a network operation.
