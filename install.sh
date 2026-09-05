@@ -190,19 +190,26 @@ install_missing_packages() {
         print_note "Install it from https://brew.sh and rerun with --install-missing."
         exit 1
       fi
-      install_with_brew stow zsh tmux neovim fzf
+      install_with_brew stow zsh tmux neovim fzf ripgrep fd lazygit
       ;;
     linux)
-      if has_command apt-get; then
-        install_with_apt stow zsh tmux neovim fzf
+      if has_command brew; then
+        install_with_brew stow zsh tmux neovim fzf ripgrep fd lazygit
+      elif has_command apt-get; then
+        install_with_apt stow zsh tmux neovim fzf ripgrep fd-find lazygit
       elif has_command dnf; then
-        install_with_dnf stow zsh tmux neovim fzf
+        install_with_dnf stow zsh tmux neovim fzf ripgrep fd-find lazygit
       elif has_command pacman; then
-        install_with_pacman gnu-stow zsh tmux neovim fzf
+        install_with_pacman gnu-stow zsh tmux neovim fzf ripgrep fd lazygit
       else
         print_error "Automatic package installation is not supported for this Linux distribution."
-        print_note "Install these packages manually and rerun: stow zsh tmux neovim fzf"
+        print_note "Install these packages manually and rerun: stow zsh tmux neovim fzf ripgrep fd lazygit"
         exit 1
+      fi
+
+      if has_command fdfind && ! has_command fd; then
+        mkdir -p "$TARGET/.local/bin"
+        ln -sf "$(command -v fdfind)" "$TARGET/.local/bin/fd"
       fi
       ;;
   esac

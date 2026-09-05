@@ -16,7 +16,7 @@ A clean `stow`-based setup with shared defaults and OS-specific overrides.
 
 `install.sh` applies the Stow packages `git`, `zsh`, `tmux`, `nvim`, `herdr`, and the current OS package (`mac` or `linux`) to a target directory. By default, the target is your home directory and the mode is `--restow`.
 
-The script prints the selected target and packages, applies Stow, optionally installs tmux plugins, and ends with any manual follow-up it detects. `stow` is the only command required to apply the links; `zsh`, `tmux`, `nvim`, and `fzf` are needed to use their corresponding configuration.
+The script prints the selected target and packages, applies Stow, optionally installs tmux plugins, and ends with any manual follow-up it detects. `stow` is the only command required to apply the links; `zsh`, `tmux`, `nvim`, `fzf`, `ripgrep`, `fd`, and `lazygit` are needed to use their corresponding configuration.
 
 ## First installation
 

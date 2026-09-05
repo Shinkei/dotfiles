@@ -13,6 +13,10 @@ elif [ -x /usr/local/bin/brew ]; then
   eval "$(/usr/local/bin/brew shellenv)"
 fi
 
+if command -v brew >/dev/null 2>&1; then
+  BREW_PREFIX="$(brew --prefix 2>/dev/null)"
+fi
+
 zstyle ':omz:update' mode auto
 
 typeset -a plugins
@@ -84,6 +88,7 @@ case "$(uname -s)" in
 esac
 
 source_first_existing \
+  "${BREW_PREFIX:-}/share/zsh-autosuggestions/zsh-autosuggestions.zsh" \
   /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
   /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
   /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh \
@@ -133,6 +138,7 @@ fi
 
 # Syntax highlighting must be loaded last.
 source_first_existing \
+  "${BREW_PREFIX:-}/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" \
   /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
   /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh \
   /usr/share/zsh/syntax-highlighting/zsh-syntax-highlighting.zsh \
