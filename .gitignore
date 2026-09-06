@@ -1,2 +1,6 @@
 **/*.DS_Store
-
+*.log
+.dotfiles-backups/
+*~
+*.swp
+*.tmp

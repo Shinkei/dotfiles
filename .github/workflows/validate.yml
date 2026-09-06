@@ -22,9 +22,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install --yes stow
 
-      - name: Validate shell syntax and whitespace
+      - name: Validate shell syntax, formatting, and lint
         run: |
           bash -n install.sh
+          bash -n test/install.sh
+          shellcheck install.sh test/install.sh
           if git rev-parse --verify HEAD^ >/dev/null 2>&1; then
             git diff --check HEAD^ HEAD
           fi

@@ -1,5 +1,9 @@
 [core]
 	pager = delta
+	excludesfile = ~/.config/git/ignore
+
+[pull]
+	rebase = true
 
 [interactive]
 	diffFilter = delta --color-only

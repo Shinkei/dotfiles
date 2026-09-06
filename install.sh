@@ -307,10 +307,8 @@ backup_stow_conflicts() {
         continue
       fi
 
-      if [ -L "$target_path" ]; then
-        if [ "$(realpath "$target_path")" = "$(realpath "$source_path")" ]; then
-          continue
-        fi
+      if [ "$(realpath "$target_path" 2>/dev/null)" = "$(realpath "$source_path" 2>/dev/null)" ]; then
+        continue
       fi
 
       backup_conflict "$target_path"
