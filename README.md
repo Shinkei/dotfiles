@@ -125,3 +125,4 @@ On normal non-delete runs, the script clones [TPM](https://github.com/tmux-plugi
 - `tmux` installs TPM and its plugins automatically unless you use `--no-tmux-plugins`. If that step fails, the config falls back to a simple status bar.
 - `nvim` keeps LazyVim and only overrides the `jk` mapping to leave insert mode.
 
+:)

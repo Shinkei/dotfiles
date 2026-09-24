@@ -278,7 +278,7 @@ install_tmux_plugins() {
 
 backup_conflict() {
   local target_path="$1"
-  local relative_target="${target_path#$TARGET/}"
+  local relative_target="${target_path#"$TARGET"/}"
   local backup_path="$BACKUP_ROOT/$relative_target"
 
   mkdir -p "$(dirname "$backup_path")"
