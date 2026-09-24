@@ -16,7 +16,7 @@ A clean `stow`-based setup with shared defaults and OS-specific overrides.
 
 `install.sh` applies the Stow packages `git`, `zsh`, `tmux`, `nvim`, `herdr`, and the current OS package (`mac` or `linux`) to a target directory. By default, the target is your home directory and the mode is `--restow`.
 
-The script prints the selected target and packages, applies Stow, optionally installs tmux plugins, and ends with any manual follow-up it detects. `stow` is the only command required to apply the links; `zsh`, `tmux`, `nvim`, `fzf`, `ripgrep`, `fd`, and `lazygit` are needed to use their corresponding configuration.
+The script prints the selected target and packages, applies Stow, optionally installs tmux plugins, and ends with any manual follow-up it detects. `stow` is the only command required to apply the links. The shell and Git configurations also use tools such as `zsh`, `tmux`, `nvim`, `fzf`, `ripgrep`, `fd`, `lazygit`, `git-delta`, `oh-my-posh`, and `yt-dlp`.
 
 ## First installation
 
@@ -68,7 +68,7 @@ mkdir -p /tmp/dotfiles-test
 | `--delete` | Remove links managed by these packages; it does not remove TPM or installed software. |
 | `--dry-run` | Preview the Stow operation without changing files. It skips backups, dependency installation, TPM, and Brewfile installation. |
 | `--backup-conflicts` | Move conflicting existing files into a timestamped `.dotfiles-backups` directory before applying links. Ignored during `--dry-run`. |
-| `--install-missing` | Install base packages using Homebrew on macOS, or `apt`, `dnf`, or `pacman` on Linux. Homebrew itself must already be installed. |
+| `--install-missing` | Install dependencies using Homebrew on macOS, or `apt`, `dnf`, or `pacman` on Linux. On Arch this includes the command-line tools and shell integrations used by these dotfiles, including Oh My Zsh, Oh My Posh, `git-delta` (`delta`), and `unzip`. Homebrew itself must already be installed. |
 | `--bundle` | On macOS, run `brew bundle --file mac/Brewfile` after Stow. |
 | `--no-tmux-plugins` | Skip cloning TPM and installing the plugins from `.tmux.conf`. |
 | `--yes` | Pass non-interactive confirmation to `apt`, `dnf`, or `pacman` when used with `--install-missing`. |

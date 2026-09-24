@@ -200,7 +200,10 @@ install_missing_packages() {
       elif has_command dnf; then
         install_with_dnf stow zsh tmux neovim fzf ripgrep fd-find lazygit
       elif has_command pacman; then
-        install_with_pacman gnu-stow zsh tmux neovim fzf ripgrep fd lazygit
+        install_with_pacman \
+          git gnu-stow zsh oh-my-zsh tmux neovim fzf ripgrep fd lazygit git-delta \
+          oh-my-posh zsh-autosuggestions zsh-syntax-highlighting lsd nvm \
+          yt-dlp ffmpeg less unzip wl-clipboard
       else
         print_error "Automatic package installation is not supported for this Linux distribution."
         print_note "Install these packages manually and rerun: stow zsh tmux neovim fzf ripgrep fd lazygit"
